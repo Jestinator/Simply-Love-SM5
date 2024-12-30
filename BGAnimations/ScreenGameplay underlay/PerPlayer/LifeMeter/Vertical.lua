@@ -56,7 +56,6 @@ local meter = Def.ActorFrame{
 		HealthStateChangedMessageCommand=function(self,params)
 			if params.PlayerNumber == player then
 				if params.HealthState == 'HealthState_Hot' then
-					self:finishtweening()
 					self:zoomto(52, 18)
 					self:accelerate(1)
 					self:diffusealpha(0)
@@ -75,8 +74,6 @@ local meter = Def.ActorFrame{
 				end
 				if oldlife ~= 250 or life ~= 100 then
 					self:bouncebegin(0.1):y(height/2-(life*2.5))
-				else
-					self:y(height/2-(life*2.5))
 				end
 			end
 		end,
@@ -96,7 +93,6 @@ local meter = Def.ActorFrame{
 		HealthStateChangedMessageCommand=function(self,params)
 			if params.PlayerNumber == player then
 				if params.HealthState == 'HealthState_Hot' then
-					self:finishtweening()
 					self:zoomto(50, 16)
 					self:accelerate(1)
 					self:diffusealpha(0)
@@ -115,8 +111,6 @@ local meter = Def.ActorFrame{
 				end
 				if oldlife ~= 250 or life ~= 100 then
 					self:bouncebegin(0.1):y(height/2-(life*2.5))
-				else
-					self:y(height/2-(life*2.5))
 				end
 			end
 		end,

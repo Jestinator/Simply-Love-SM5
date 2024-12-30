@@ -49,7 +49,7 @@ af[#af+1] = Def.Sprite{
 }
 
 
-if ThemePrefs.Get("VisualStyle") ~= "SRPG8" then
+if ThemePrefs.Get("VisualStyle") ~= "Maxx" then
 	-- decorative arrows for current game (dance, pump, techno, etc.)
 	af[#af+1] = LoadActor(resolved_path)..{
 		InitCommand=function(self)
@@ -77,6 +77,9 @@ if ThemePrefs.Get("VisualStyle") ~= "SRPG8" then
 			-- In case we auto-switch to SRPG8, then it's possible this actor may have been added to the screen.
 			-- If so, we want to hide the logo as it interferes with the SRPG8 logo.
 			if ThemePrefs.Get("VisualStyle") == "SRPG8" then
+				self:visible(false)
+			end
+			if ThemePrefs.Get("VisualStyle") == "Maxx" then
 				self:visible(false)
 			end
 		end

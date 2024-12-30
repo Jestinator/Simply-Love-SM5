@@ -24,7 +24,7 @@ af[#af+1] = Def.Quad{
 	VisualStyleSelectedMessageCommand=function(self)
 		THEME:ReloadMetrics() -- is this needed here?  -quietly
 		SL.Global.ActiveColorIndex = ThemePrefs.Get("RainbowMode") and 3 or ThemePrefs.Get("SimplyLoveColor")
-		self:linear(1):diffuse( ThemePrefs.Get("RainbowMode") and Color.White or Color.Black )
+		self:linear(1):diffuse( ThemePrefs.Get("RainbowMode") and Color.Black or Color.Black )
 	end
 }
 

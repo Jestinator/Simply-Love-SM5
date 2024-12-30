@@ -71,16 +71,11 @@ local permitted_profile_settings = {
 	JudgmentTilt         = "boolean",
 	ColumnCues           = "boolean",
 	ColumnCountdown      = "boolean",
+	ShowHeldMiss         = "boolean",
 	TrackFoot            = "boolean",
 	ScaleGraph           = "boolean",
 
-	-- Error Bar Options --
-	Colorful             = "boolean",
-	Monochrome           = "boolean", 
-	Text                 = "boolean", 
-	Highlight            = "boolean",
-	Average              = "boolean",
-	--
+	ErrorBar             = "string",
 	ErrorBarUp           = "boolean",
 	ErrorBarMultiTick    = "boolean",
 	ErrorBarCap    		 = "number",

@@ -7,20 +7,10 @@ if SL.Global.GameMode == "Casual" then
     return
 end
 
--- if mods.ErrorBar == "None" then
---     return
--- end
-
-local af = Def.ActorFrame{
-    Name="ErrorBarContainer"..pn
-  }
-
-local ErrorBarTypes = { "Colorful", "Monochrome", "Text", "Highlight", "Average" }
-
-for i, barname in ipairs(ErrorBarTypes) do
-    if mods[barname] then 
-        af[#af+1] = LoadActor(barname .. ".lua", player, layout)
-    end
+if mods.ErrorBar == "None" then
+    return
 end
 
-return af
+local a = LoadActor(mods.ErrorBar .. ".lua", player, layout)
+
+return a

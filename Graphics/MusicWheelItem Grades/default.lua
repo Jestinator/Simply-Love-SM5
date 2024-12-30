@@ -70,7 +70,7 @@ local function GetLamp(song)
 			best_lamp = math.min(best_lamp and best_lamp or 999, AwardMap[award])
 		end
 		
-		if AwardMap[award] == best_lamp and best_lamp == 1 and score:GetScore() == 0 then
+		if best_lamp == 1 and score:GetScore() == 0 then
 			best_lamp = 0
 		elseif best_lamp == nil then
 			if score:GetGrade() == "Grade_Failed" then best_lamp = 52

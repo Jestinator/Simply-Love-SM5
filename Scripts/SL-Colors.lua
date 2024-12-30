@@ -54,18 +54,16 @@ function DifficultyColor( difficulty, decorative )
 	
 	local currentSong = GAMESTATE:GetCurrentSong()
 	if currentSong then
-		if difficulty == "Difficulty_Challenge" then
-			if string.find(string.upper(currentSong:GetMainTitle()), "%(NOVICE%)") then
-				difficulty = 0
-			elseif string.find(string.upper(currentSong:GetMainTitle()), "%(EASY%)") then
-				difficulty = 1
-			elseif string.find(string.upper(currentSong:GetMainTitle()), "%(MEDIUM%)") then
-				difficulty = 2
-			elseif string.find(string.upper(currentSong:GetMainTitle()), "%(HARD%)") then
-				difficulty = 3
-			elseif string.find(string.upper(currentSong:GetMainTitle()), "%(EDIT%)") then
-				difficulty = 5
-			end
+		if string.find(string.upper(currentSong:GetMainTitle()), "%(NOVICE%)") then
+			difficulty = 0
+		elseif string.find(string.upper(currentSong:GetMainTitle()), "%(EASY%)") then
+			difficulty = 1
+		elseif string.find(string.upper(currentSong:GetMainTitle()), "%(MEDIUM%)") then
+			difficulty = 2
+		elseif string.find(string.upper(currentSong:GetMainTitle()), "%(HARD%)") then
+			difficulty = 3
+		elseif string.find(string.upper(currentSong:GetMainTitle()), "%(EDIT%)") then
+			difficulty = 5
 		end
 	end
 

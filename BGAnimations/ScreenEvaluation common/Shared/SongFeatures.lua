@@ -43,7 +43,7 @@ return Def.ActorFrame{
 					seconds = TrailUtil.GetTotalSeconds(trail)
 				end
 			else
-				seconds = GAMESTATE:GetCurrentSong():GetLastSecond()
+				seconds = GAMESTATE:GetCurrentSong():MusicLengthSeconds()
 			end
 
 			if seconds then

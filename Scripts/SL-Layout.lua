@@ -23,17 +23,8 @@ function GetGameplayLayout(player, reverse)
 
     local topY = judgmentY - judgmentHeight/2
     local bottomY = judgmentY + judgmentHeight/2
-	
-	local hasErrorBar = false
-	local ErrorBarTypes = { "Colorful", "Monochrome", "Text", "Highlight", "Average" }
-	for i, barname in ipairs(ErrorBarTypes) do
-		if mods[barname] then 
-			hasErrorBar = true
-			break
-		end
-	end
 
-    if hasErrorBar then
+    if mods.ErrorBar ~= "None" then
         if mods.JudgmentGraphic == "None" then
             -- Display the error bar in place of the judgment graphic if it's
             -- disabled.
