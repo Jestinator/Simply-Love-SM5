@@ -564,7 +564,7 @@ local af = Def.ActorFrame {
 					method="POST",
 					headers=headers,
 					body=JsonEncode(body),
-					timeout=30,
+					timeout=57,
 					callback=AutoSubmitRequestProcessor,
 					args=SCREENMAN:GetTopScreen():GetChild("Overlay"):GetChild("ScreenEval Common"),
 				})

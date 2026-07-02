@@ -14,13 +14,18 @@ local ex = SL[ToEnumShortString(player)].CurrentSongJudgments.EX
 WriteGhostData = function(player, songHash)
 	local pn = ToEnumShortString(player)
 
+        local itg = SL[ToEnumShortString(player)].CurrentSongJudgments.ITG
+        local ex = SL[ToEnumShortString(player)].CurrentSongJudgments.EX
+
 	-- set initial array of dance points to write
 	local array = {}
 	array["itg"] = itg
 	array["ex"] = ex
+-- Add this line to fetch our live offset table:
+--        array["offsets"] = SL[pn].CurrentSongJudgments.Offsets
 
-	currITG = itg[#itg]
-	currEX = ex[#ex]
+	currITG = itg[#itg] or 0
+	currEX = ex[#ex] or 0
 
 	local profile_slot = {
 		[PLAYER_1] = "ProfileSlot_Player1",
@@ -70,9 +75,46 @@ WriteGhostData = function(player, songHash)
 end
 
 return Def.Actor{
-	OnCommand=function(self)
-		-- get song hash
-		local hash = SL[pn].Streams.Hash
-		WriteGhostData(player,hash)
-	end
+        OnCommand=function(self)
+                -- get song hash
+                local hash = SL[pn].Streams.Hash
+                WriteGhostData(player,hash)
+
+                -- ====================================================
+                -- STANDALONE MULTIDIMENSIONAL CSV FILE EXPORTER
+                -- ====================================================
+                local raw_offsets = SL[pn].CurrentSongJudgments.Offsets
+                if raw_offsets and #raw_offsets > 0 then
+                        local song = GAMESTATE:GetCurrentSong()
+                        local song_title = song and song:GetDisplayMainTitle() or "Unknown_Song"
+                        
+                        -- Extract chart difficulty metrics natively
+                        local steps = GAMESTATE:GetCurrentSteps(player)
+                        local difficulty = steps and ToEnumShortString(steps:GetDifficulty()) or "Unknown_Diff"
+                        local meter = steps and steps:GetMeter() or 0
+                        
+                        local logFile = RageFileUtil:CreateRageFile()
+                        -- Mode 8 tells StepMania to open in Append mode (adds to the bottom of the file)
+                        if logFile:Open("./ITG_Raw_Timeline_Log.csv", 8) then
+                                -- Write Metadata Block Header
+                                logFile:Write(string.format("# SONG: %s\n", song_title))
+                                logFile:Write(string.format("# CHART: %s (Block Level %d)\n", difficulty, meter))
+                                logFile:Write(string.format("# TIMESTAMP: %s\n", os.date("%Y-%m-%d %H:%M:%S")))
+                                
+                                -- Write CSV Columns Layout
+                                logFile:Write("Lane_Column,Offset_Seconds,Song_Time_Sec,Live_BPM\n")
+                                
+                                -- Stream every recorded step line out
+                                for i = 1, #raw_offsets do
+                                        logFile:Write(raw_offsets[i] .. "\n")
+                                end
+                                
+                                logFile:Write("# END OF CHART RECORD\n\n")
+                                logFile:Close()
+                        end
+                        logFile:destroy()
+                end
+                -- ====================================================
+
+        end
 }

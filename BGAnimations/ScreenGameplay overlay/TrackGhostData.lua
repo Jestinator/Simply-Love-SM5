@@ -15,9 +15,15 @@ local stats = STATSMAN:GetCurStageStats():GetPlayerStageStats(player)
 SL[pn].CurrentSongJudgments = {}
 SL[pn].CurrentSongJudgments.ITG = {}
 SL[pn].CurrentSongJudgments.EX = {}
+
+--added
+SL[pn].CurrentSongJudgments.Offsets = {}
+
 local itg = SL[pn].CurrentSongJudgments.ITG
 local ex = SL[pn].CurrentSongJudgments.EX
 
+--added
+local raw_offsets = SL[pn].CurrentSongJudgments.Offsets
 
 local currentdp_itg = 0
 local currentdp_ex = 0
@@ -107,6 +113,24 @@ return Def.Actor{
 		elseif params.TapNoteScore then
 			local TNS = ToEnumShortString(params.TapNoteScore)
 			if valid_tns[TNS] then
+
+                                -- ====================================================
+                                -- CUSTOM INJECTION: ITGmania-Native Telemetry Loop
+                                -- ====================================================
+                                if params.Notes and params.TapNoteOffset then
+                                        for col, tapnote in pairs(params.Notes) do
+                                                local target_offset = params.TapNoteOffset
+                                                local song_time = GAMESTATE:GetSongPosition():GetMusicSeconds() or 0
+                                                
+                                                -- Package exactly 3 metrics as a comma-separated segment string
+                                                local data_string = string.format("%d,%.4f,%.3f", col, target_offset, song_time)
+                                                
+                                                local target_table = SL[pn].CurrentSongJudgments.Offsets
+                                                target_table[#target_table+1] = data_string
+                                        end
+                                end
+                                -- ====================================================
+
 				-- ITG
 				currentdp_itg = currentdp_itg + SL["Metrics"][game]["GradeWeight"..TNS]
 
